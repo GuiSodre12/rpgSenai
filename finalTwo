@@ -325,19 +325,20 @@ public class HelloWorld
     
     static void CapituloTres()
     {
-        PrintarDramatico("\nD. Marcilia: O que voc.");
-        PrintarDramatico("Carlos: nao acho certo ficarmos aqui. aqui e uma area restrita.");
-        PrintarDramatico("Luana: to contigo nessa, ficar aqui pode se tornar um grande problema com a diretora.");
-        PrintarDramatico("jogador: parem de reclamar! Luana fica na porta enquanto meu celular carrega.");
+        PrintarDramatico("\nD. Marcilia: O que voces pensam que estao fazendo??.");
+        PrintarDramatico("Luana: Desculpa porfavor didiiii😭😭.");
+        PrintarDramatico("jogador: A culpa foi minha, eu obriguei eles a virem comigo.");
+        PrintarDramatico("jogador: Nao os culpe!");
         Console.Clear();
-        PrintarDramatico("\nLuana: ok . . .");
-        PrintarDramatico("Luana: Olha aquela sala… foi fechada desde o ano passado!");
-        PrintarDramatico("'Diretora se aproxima da sala . . .'");
-        PrintarDramatico("Luana: se esconde!! ela tá vindo");
-        PrintarDramatico("D. Marcilia: Saiam daí agora!!\n eu ví vocês pela janela.");
-        PrintarDramatico("Todos sairam de fininho de cabeça baixa.");
-        PrintarDramatico("D. Marcilia: Vamos ter uma conversa na minha sala os 3");
-        PrintarDramatico("Carlos: Eu falei que ia dar ruim");
-        PrintarDramatico("jogador: Relaxa! vai ser só mais um esporro comum");
+        PrintarDramatico("\nD. Marcilia: enfim, chamei voces aqui por que preciso da ajuda de voces");
+        PrintarDramatico("Luana: como assim ajuda?");
+        PrintarDramatico("D. Marcilia: deixe eu explicar");
+        PrintarDramatico("D. Marcilia: O que vou lhes contar não pode sair desta sala. Nos anos 90, um professor chamado Vicente criou uma IA avançadíssima: o Projeto Aurora. Ele desapareceu… e agora alguém ou algo reativou o sistema.");
+        PrintarDramatico("Carlos: como é??\n onde voce acha que a gente pode ajuda?.");
+        PrintarDramatico("Luana: nos somos so estudantes.");
+        PrintarDramatico("D. Marcilia: Porque vocês não estão nos registros do sistema. Aurora não os reconhece\n. peguem esses crachás parem acessar o porão da escola");
+        PrintarDramatico("jogador: acha mesmo que iremos aceitar assim facil?");
+        PrintarDramatico("D. Marcilia: se voces nao forem eu exoulsos voces dessa escola");
+        PrintarDramatico("jogador: ta jogando sujo.\n. nos vamos");
     }
 }
