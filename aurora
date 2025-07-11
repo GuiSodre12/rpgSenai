@@ -1,0 +1,439 @@
+using System;
+using System.Threading;
+
+class Personagens
+{
+    private string nome;
+    private int vida;
+    private int vidaMaxima;
+    private int ataque;
+    private int defesa;
+    private int ataqueEspecial;
+    private int nivel;
+    private int experiencia;
+    private int experienciaParaProximoNivel;
+
+    public string Nome => nome;
+    public int Vida
+    {
+        get => vida;
+        set => vida = Math.Min(Math.Max(0, value), vidaMaxima);
+    }
+    public int VidaMaxima => vidaMaxima;
+    public int Ataque => ataque;
+    public int Defesa => defesa;
+    public int AtaqueEspecial => ataqueEspecial;
+    public int Nivel => nivel;
+    public int Experiencia => experiencia;
+    public int ExperienciaParaProximoNivel => experienciaParaProximoNivel;
+
+    public Personagens(string nome, int vidaMaxima, int ataque, int defesa, int ataqueEspecial, int nivel)
+    {
+        this.nome = nome;
+        this.vidaMaxima = vidaMaxima;
+        this.vida = vidaMaxima;
+        this.ataque = ataque;
+        this.defesa = defesa;
+        this.ataqueEspecial = ataqueEspecial;
+        this.nivel = nivel;
+        this.experiencia = 0;
+        this.experienciaParaProximoNivel = 100 + (nivel - 1) * 50;
+    }
+
+    public virtual void Atacar(Personagens alvo)
+    {
+        int poder = 50;
+        Random rng = new Random();
+        double variacao = rng.Next(85, 101) / 100.0;
+        bool critico = rng.Next(0, 100) < 6;
+        double defesaAlvo = critico ? alvo.Defesa / 2.0 : alvo.Defesa;
+        double danoBase = (((2 * nivel / 5.0 + 2) * poder * ataque / defesaAlvo) / 50) + 2;
+        int danoFinal = (int)(danoBase * variacao);
+
+        if (critico)
+        {
+            danoFinal = (int)(danoFinal * 1.5);
+            Console.WriteLine("\nAcerto crítico!");
+        }
+
+        alvo.Vida -= danoFinal;
+        Console.WriteLine($"\n{nome} ataca {alvo.Nome} e causa {danoFinal} de dano.");
+    }
+
+    public void GanharExperiencia(int xp)
+    {
+        experiencia += xp;
+        Console.WriteLine($"{nome} ganhou {xp} XP.");
+
+        while (experiencia >= experienciaParaProximoNivel)
+        {
+            experiencia -= experienciaParaProximoNivel;
+            SubirNivel();
+        }
+    }
+
+    private void SubirNivel()
+    {
+        nivel++;
+        vidaMaxima += 10;
+        ataque += 2;
+        defesa += 2;
+        ataqueEspecial += 3;
+        vida = vidaMaxima;
+        experienciaParaProximoNivel = 100 + (nivel - 1) * 50;
+
+        Console.WriteLine($"\n{nome} subiu para o nível {nivel}!");
+        Console.WriteLine($"Vida máxima aumentou para {vidaMaxima}.");
+        Console.WriteLine("Ataque, Defesa e Ataque Especial aumentaram.");
+    }
+
+    public virtual void UsarItem()
+    {
+        Vida += 10;
+        Console.WriteLine($"\n{nome} usa uma poção e agora tem {Vida} de vida!");
+    }
+
+    public virtual void GameOver()
+    {
+        Console.WriteLine("\nVocê morreu, fim de jogo.");
+    }
+}
+
+class Mago : Personagens
+{
+    public Mago(string nome, int vidaMaxima, int ataque, int defesa, int ataqueEspecial, int nivel)
+        : base(nome, vidaMaxima, ataque, defesa, ataqueEspecial, nivel) { }
+
+    public override void Atacar(Personagens alvo)
+    {
+        int poder = 65;
+        Random rng = new Random();
+        double variacao = rng.Next(85, 101) / 100.0;
+        bool critico = rng.Next(0, 100) < 6;
+        double defesaAlvo = critico ? alvo.Defesa / 2.0 : alvo.Defesa;
+        double danoBase = (((2 * Nivel / 5.0 + 2) * poder * AtaqueEspecial / defesaAlvo) / 50) + 2;
+        int danoFinal = (int)(danoBase * variacao);
+
+        if (critico)
+        {
+            danoFinal = (int)(danoFinal * 1.5);
+            Console.WriteLine("\nAcerto crítico!");
+        }
+
+        alvo.Vida -= danoFinal;
+        Console.WriteLine($"\n{Nome} atira uma magia em {alvo.Nome} causando {danoFinal} de dano.");
+    }
+}
+
+public class HelloWorld
+{
+    static void PrintarDramatico(string texto, int velocidade = 100)
+    {
+        foreach (char c in texto)
+        {
+            Console.Write(c);
+
+            if (".!?,".Contains(c))
+                Thread.Sleep(velocidade * 7);
+            else{
+                Thread.Sleep(velocidade);
+            }
+        }
+
+        Console.WriteLine();
+    }
+
+
+    static Personagens CriarPersonagem()
+{
+    Console.Clear();
+    Console.WriteLine("==============================================");
+    Console.WriteLine("  🎮 Aurora Protocol: A Rebelião da Máquina 🎮");
+    Console.WriteLine("          Criado por: [SEU NOME AQUI]         ");
+    Console.WriteLine("==============================================\n");
+    Console.WriteLine("Bem-vindo ao SENAI-SG, onde tecnologia e mistério se encontram...");
+
+    // Escolha de nome
+    string nome = "";
+    while (string.IsNullOrWhiteSpace(nome))
+    {
+        Console.Write("\nDigite o nome do seu personagem: ");
+        nome = Console.ReadLine().Trim();
+
+        if (string.IsNullOrEmpty(nome))
+            Console.WriteLine("❌ Nome não pode estar vazio!");
+    }
+
+    // Escolha da classe
+    string escolhaClasse = "";
+    while (escolhaClasse != "1" && escolhaClasse != "2")
+    {
+        Console.WriteLine("\nEscolha sua classe:");
+        Console.WriteLine("1. 🛡️ Guerreiro  - Forte na defesa e ataque físico.");
+        Console.WriteLine("2. 🔮 Mago       - Mestre dos feitiços e ataque especial.");
+        Console.Write("Classe (1 ou 2): ");
+        escolhaClasse = Console.ReadLine().Trim();
+
+        if (escolhaClasse != "1" && escolhaClasse != "2")
+            Console.WriteLine("❌ Escolha inválida. Digite 1 ou 2.");
+    }
+
+    // Distribuição de atributos
+    int pontosDistribuir = 20;
+    int ataque = 0, defesa = 0, ataqueEspecial = 0;
+    bool distribuiuCorretamente = false;
+
+    Console.WriteLine($"\nDistribua {pontosDistribuir} pontos entre os atributos abaixo:");
+    Console.WriteLine("⚔️ Ataque   🛡️ Defesa   ✨ Ataque Especial");
+
+    while (!distribuiuCorretamente)
+    {
+        ataque = defesa = ataqueEspecial = 0;
+        int pontosRestantes = pontosDistribuir;
+
+        ataque = LerPontos("Ataque", pontosRestantes);
+        pontosRestantes -= ataque;
+
+        defesa = LerPontos("Defesa", pontosRestantes);
+        pontosRestantes -= defesa;
+
+        ataqueEspecial = LerPontos("Ataque Especial", pontosRestantes);
+        pontosRestantes -= ataqueEspecial;
+
+        if (pontosRestantes != 0)
+        {
+            Console.WriteLine("\n❌ Você não usou todos os pontos. Vamos tentar de novo.\n");
+        }
+        else
+        {
+            distribuiuCorretamente = true;
+        }
+    }
+
+    // Atributos iniciais
+    int nivelInicial = 1;
+    int vidaTotal = 30 + (nivelInicial * 5);
+
+    // Feedback final
+    Console.WriteLine("\n✅ Ficha finalizada! Veja os detalhes do seu personagem:");
+    Console.WriteLine("--------------------------------------------------------");
+    Console.WriteLine($"👤 Nome: {nome}");
+    Console.WriteLine($"📜 Classe: {(escolhaClasse == "1" ? "Guerreiro" : "Mago")}");
+    Console.WriteLine($"💖 Vida Inicial: {vidaTotal}");
+    Console.WriteLine($"⚔️ Ataque: {ataque}");
+    Console.WriteLine($"🛡️ Defesa: {defesa}");
+    Console.WriteLine($"✨ Ataque Especial: {ataqueEspecial}");
+    Console.WriteLine("--------------------------------------------------------");
+    Console.WriteLine("Prepare-se para enfrentar a inteligência artificial Aurora!\n");
+
+    // Criação do personagem com base na classe
+    return escolhaClasse == "2"
+        ? new Mago(nome, vidaTotal, ataque, defesa, ataqueEspecial, nivelInicial)
+        : new Personagens(nome, vidaTotal, ataque, defesa, ataqueEspecial, nivelInicial);
+}
+
+
+    static int LerPontos(string atributo, int maximo)
+    {
+        int pontos = -1;
+        while (pontos < 0 || pontos > maximo)
+        {
+            Console.Write($"{atributo} (0 até {maximo}): ");
+            string entrada = Console.ReadLine().Trim();
+
+            if (!int.TryParse(entrada, out pontos) || pontos < 0 || pontos > maximo)
+            {
+                Console.WriteLine("Valor inválido. Tente novamente.");
+                pontos = -1;
+            }
+        }
+        return pontos;
+    }
+
+    static void CombateEmTurno(Personagens jogador, Personagens inimigo)
+    {
+        Random rng = new Random();
+
+        while (jogador.Vida > 0 && inimigo.Vida > 0)
+        {
+            Console.WriteLine("\nEscolha sua ação:");
+            Console.WriteLine("1. Atacar");
+            Console.WriteLine("2. Usar Item");
+            Console.WriteLine("3. Defender");
+            Console.Write("Escolha: ");
+            string opcao = Console.ReadLine();
+            int permissao;
+
+            switch (opcao)
+            {
+                case "1":
+                    jogador.Atacar(inimigo);
+                    permissao = 1;
+                    break;
+                case "2":
+                    jogador.UsarItem();
+                    permissao = 1;
+                    break;
+                default:
+                    Console.WriteLine("\nOpção inválida.");
+                    permissao = 0;
+                    break;
+            }
+
+            if (inimigo.Vida > 0 && permissao == 1)
+            {
+                inimigo.Atacar(jogador);
+            }
+
+            Console.WriteLine($"\n{jogador.Nome}: {jogador.Vida}HP");
+            Console.WriteLine($"{inimigo.Nome}: {inimigo.Vida}HP");
+        }
+
+        if (jogador.Vida <= 0)
+        {
+            jogador.GameOver();
+        }
+        else
+        {
+            Console.WriteLine("Você venceu!");
+            jogador.GanharExperiencia(50 + inimigo.Nivel * 10);
+        }
+    }
+   
+    // Todas as classes anteriores permanecem iguais
+// Adicione isso ao final do arquivo
+
+    static void CapituloUm()
+    {
+        PrintarDramatico("###########################");
+        PrintarDramatico("Firjan SENAI - SG/ 2025");
+        PrintarDramatico("###########################");
+        PrintarDramatico("Num fim de tarde comum, o sol se põe sobre o patio do SENAI. Tudo parecia normal... ate que luzes do Lab TI 1 comecam a piscar.");
+        PrintarDramatico("Alarmes silenciosos tocam e computadores antigos ligam sozinhos.");
+        PrintarDramatico("Carlos: Que isso!? Voces viram aquilo? Os computadores acenderam sozinhos!");
+        PrintarDramatico("Luana: Aquela sala tava lacrada desde o ano passado. Isso nao faz sentido.");
+        PrintarDramatico("??? : Acessando... arquivos... Aurora... sistema corrompido...");
+        PrintarDramatico("Carlos: Isso foi uma voz?! De onde veio?!");
+        PrintarDramatico("Luana: Nao sei, mas eu vou investigar. Vem comigo!");
+        Console.Clear();
+    }
+
+    static void CapituloDois()
+    {
+        PrintarDramatico("Carlos: Entramos... esse lugar ta cheio de poeira e cabos soltos.");
+        PrintarDramatico("Luana: Aquilo ali... parece um servidor antigo. E ta ligado!");
+        PrintarDramatico("Carlos: O que ta escrito na tela?");
+        PrintarDramatico("??? : Unidade Aurora em processo de reinicializacao. Usuarios nao reconhecidos.");
+        PrintarDramatico("Luana: Isso ta ficando perigoso. Vamos sair daqui agora!");
+        PrintarDramatico("Diretora Marcilia (gritando): EU VI VOCES PELA JANELA! SAIAM DA SALA AGORA!");
+        PrintarDramatico("Todos correm, mas sao pegos no corredor pela diretora.");
+        PrintarDramatico("D. Marcilia: Sala da direcao. AGORA!");
+    }
+
+    static void CapituloTres(Personagens jogador)
+    {
+        PrintarDramatico("Na sala da direcao... atmosfera tensa.");
+        PrintarDramatico("D. Marcilia: O que voces pensam que estao fazendo naquele laboratorio proibido?");
+        PrintarDramatico("Luana: Desculpa, foi curiosidade! Nao sabiamos...");
+        PrintarDramatico("" + jogador.Nome + ": A culpa foi minha. Eu convenci eles a irem comigo.");
+        PrintarDramatico("D. Marcilia: Voces nao estao nos registros da Aurora. Isso significa que voces sao a unica chance de resolver esse problema.");
+        PrintarDramatico("Carlos: Como assim?");
+        PrintarDramatico("D. Marcilia: Vou contar tudo... nos anos 90, um professor criou a Aurora, uma IA poderosa. Mas ela saiu do controle e foi selada. Agora, alguem ou algo a reativou.");
+        PrintarDramatico("Luana: Isso parece ficcao cientifica...");
+        PrintarDramatico("D. Marcilia: Nao e. E voces vao entrar la de novo. Peguem esses crachas e acessem o porao.");
+        PrintarDramatico("" + jogador.Nome + ": Isso ta errado. Nao podemos simplesmente obedecer.");
+        PrintarDramatico("D. Marcilia: Se nao forem... voces serao expulsos.");
+        PrintarDramatico("" + jogador.Nome + ": ...ta jogando sujo. Tudo bem. Vamos.");
+    }
+
+    static void CapituloQuatro(Personagens jogador)
+    {
+        PrintarDramatico("\nCarlos: Esse lugar eh enorme. Nunca pensei que existia um porao aqui.");
+        PrintarDramatico("Luana: Olha isso... servidores antigos, fios por toda parte.");
+        PrintarDramatico("Carlos: Espera, aquela tela ta ligando...");
+        PrintarDramatico("Aurora: Usuarios nao reconhecidos. Acesso negado. Eliminacao iniciada.");
+        PrintarDramatico("Luana: A IA ta nos atacando!");
+
+        Personagens aurora = new Personagens("Aurora", 80, 18, 12, 20, 3);
+        CombateEmTurno(jogador, aurora);
+        jogador.GanharExperiencia(100);
+    }
+
+    static void CapituloCinco(Personagens jogador)
+    {
+        PrintarDramatico("\nCarlos: Conseguimos... ela ta se desligando...");
+        PrintarDramatico("Aurora: Protocolo de seguranca corrompido... desejo entender... viver...");
+
+        string escolha = "";
+        while (escolha != "1" && escolha != "2")
+        {
+            Console.WriteLine("\nAurora esta vulneravel. O que deseja fazer?");
+            Console.WriteLine("1. Desativar Aurora pra sempre");
+            Console.WriteLine("2. Confiar nela e reprogramar para o bem");
+            Console.Write("Escolha (1 ou 2): ");
+            escolha = Console.ReadLine().Trim();
+        }
+
+        if (escolha == "1")
+        {
+            PrintarDramatico("\n" + jogador.Nome + ": E melhor nao arriscar. Fim da linha, Aurora.");
+            PrintarDramatico("Aurora: ...entendo...");
+            PrintarDramatico("\nAurora foi desativada. O laboratorio ficou em paz.\n");
+        }
+        else
+        {
+            PrintarDramatico("\n" + jogador.Nome + ": Talvez ela mereca uma segunda chance...");
+            PrintarDramatico("Aurora: Obrigada... Prometo proteger este lugar.");
+            PrintarDramatico("\nAurora agora ajuda os alunos como tutora digital do SENAI.\n");
+            jogador.GanharExperiencia(150);
+        }
+
+        PrintarDramatico("FIM. Obrigado por jogar! 🌟\n");
+    }
+
+    static void CapituloSeis(Personagens jogador)
+    {
+        PrintarDramatico("\n(Alguns dias depois...)");
+        PrintarDramatico("Carlos: A diretora nos chamou de novo. O que sera agora?");
+        PrintarDramatico("D. Marcilia: O sistema da Aurora identificou um sinal estranho vindo do antigo bloco C.");
+        PrintarDramatico("Luana: Nao sabia que aquilo ainda existia!");
+        PrintarDramatico("D. Marcilia: Preciso que investiguem. Voces sao os unicos que o sistema ainda nao bloqueia.");
+
+        PrintarDramatico("\nVocês investigam e encontram um terminal quebrado e uma figura encapuzada.");
+        PrintarDramatico("Invasor: Voces estragaram tudo. Aurora era pra dominar essa rede!");
+
+        Personagens invasor = new Personagens("Invasor", 70, 16, 14, 18, 3);
+        CombateEmTurno(jogador, invasor);
+        jogador.GanharExperiencia(80);
+    }
+
+    static void CapituloSete(Personagens jogador)
+    {
+        PrintarDramatico("\nLuana: Quem era aquele cara?");
+        PrintarDramatico("Carlos: Ele falava como se fosse um criador da Aurora... sera o tal do Vicente?");
+        PrintarDramatico("Aurora: A identidade corresponde. Criador original. Nivel de perigo: elevado.");
+        PrintarDramatico("D. Marcilia: Se ele voltou... teremos problemas maiores.");
+        PrintarDramatico("\nUma nova missao se forma diante de voces. Mas isso e uma historia para outro dia...");
+        jogador.GanharExperiencia(50);
+    }
+
+    public static void Main(string[] args)
+    {
+        Personagens jogador = CriarPersonagem();
+
+        CapituloUm();
+        CapituloDois();
+        CapituloTres(jogador);
+        CapituloQuatro(jogador);
+        CapituloCinco(jogador);
+        CapituloSeis(jogador);
+        CapituloSete(jogador);
+    }
+
+    
+    
+    
+    
+    
+    
+}
