@@ -89,13 +89,21 @@ class Personagens
 
     public virtual void UsarItem()
     {
+        int uso = 6;
+        if(uso > 0){
+        Console.WriteLine($"\n{nome} bebe um GATORADE e agora tem {Vida} de vida!");
         Vida += 10;
-        Console.WriteLine($"\n{nome} usa uma poção e agora tem {Vida} de vida!");
+        }
+        else{
+            Console.WriteLine("\n Droga! Acabaram os Gatorades.");
+        }
     }
 
     public virtual void GameOver()
     {
-        Console.WriteLine("\nVocê morreu, fim de jogo.");
+        Console.WriteLine("Carlos: EI! LEVANTA CARA!");
+        Console.WriteLine("\nVocê desmaia e a última coisa que se lembra é do riso maléfico de Aurora.");
+        Console.WriteLine("\nFIM DE JOGO.");
     }
 }
 
@@ -148,8 +156,7 @@ public class HelloWorld
 {
     Console.Clear();
     Console.WriteLine("==============================================");
-    Console.WriteLine("  🎮 Aurora Protocol: A Rebelião da Máquina 🎮");
-    Console.WriteLine("          Criado por: [SEU NOME AQUI]         ");
+    Console.WriteLine("  🎮 Protocolo Aurora");
     Console.WriteLine("==============================================\n");
     Console.WriteLine("Bem-vindo ao SENAI-SG, onde tecnologia e mistério se encontram...");
 
@@ -179,7 +186,7 @@ public class HelloWorld
     }
 
     // Distribuição de atributos
-    int pontosDistribuir = 20;
+    int pontosDistribuir = 150;
     int ataque = 0, defesa = 0, ataqueEspecial = 0;
     bool distribuiuCorretamente = false;
 
@@ -212,7 +219,7 @@ public class HelloWorld
 
     // Atributos iniciais
     int nivelInicial = 1;
-    int vidaTotal = 30 + (nivelInicial * 5);
+    int vidaTotal = 70 + (nivelInicial * 5);
 
     // Feedback final
     Console.WriteLine("\n✅ Ficha finalizada! Veja os detalhes do seu personagem:");
@@ -258,8 +265,7 @@ public class HelloWorld
         {
             Console.WriteLine("\nEscolha sua ação:");
             Console.WriteLine("1. Atacar");
-            Console.WriteLine("2. Usar Item");
-            Console.WriteLine("3. Defender");
+            Console.WriteLine("2. Beber Gatorades");
             Console.Write("Escolha: ");
             string opcao = Console.ReadLine();
             int permissao;
@@ -308,66 +314,67 @@ public class HelloWorld
         PrintarDramatico("###########################");
         PrintarDramatico("Firjan SENAI - SG/ 2025");
         PrintarDramatico("###########################");
-        PrintarDramatico("Num fim de tarde comum, o sol se põe sobre o patio do SENAI. Tudo parecia normal... ate que luzes do Lab TI 1 comecam a piscar.");
+        PrintarDramatico("Num fim de tarde comum, o sol se põe sobre o pátio do SENAI. Tudo parecia normal... até que luzes do Lab TI 1 começam a piscar.");
         PrintarDramatico("Alarmes silenciosos tocam e computadores antigos ligam sozinhos.");
         PrintarDramatico("Carlos: Que isso!? Voces viram aquilo? Os computadores acenderam sozinhos!");
-        PrintarDramatico("Luana: Aquela sala tava lacrada desde o ano passado. Isso nao faz sentido.");
+        PrintarDramatico("Luana: Aquela sala tava lacrada desde o ano passado. Isso não faz sentido.");
         PrintarDramatico("??? : Acessando... arquivos... Aurora... sistema corrompido...");
         PrintarDramatico("Carlos: Isso foi uma voz?! De onde veio?!");
-        PrintarDramatico("Luana: Nao sei, mas eu vou investigar. Vem comigo!");
+        PrintarDramatico("Luana: Não sei, mas eu vou investigar. Vem comigo!");
         Console.Clear();
     }
 
     static void CapituloDois()
     {
-        PrintarDramatico("Carlos: Entramos... esse lugar ta cheio de poeira e cabos soltos.");
+        PrintarDramatico("Carlos: Entramos... esse lugar tá cheio de poeira e cabos soltos.");
         PrintarDramatico("Luana: Aquilo ali... parece um servidor antigo. E ta ligado!");
-        PrintarDramatico("Carlos: O que ta escrito na tela?");
-        PrintarDramatico("??? : Unidade Aurora em processo de reinicializacao. Usuarios nao reconhecidos.");
+        PrintarDramatico("Carlos: O que tá escrito na tela?");
+        PrintarDramatico("??? : Unidade Aurora em processo de reinicialização. Usuários não reconhecidos.");
         PrintarDramatico("Luana: Isso ta ficando perigoso. Vamos sair daqui agora!");
-        PrintarDramatico("Diretora Marcilia (gritando): EU VI VOCES PELA JANELA! SAIAM DA SALA AGORA!");
+        PrintarDramatico("Diretora Marcília (gritando): EU VI VOCÊS PELA JANELA! SAIAM DA SALA AGORA!");
         PrintarDramatico("Todos correm, mas sao pegos no corredor pela diretora.");
-        PrintarDramatico("D. Marcilia: Sala da direcao. AGORA!");
+        PrintarDramatico("D. Marcilia: Diretoria. AGORA!");
     }
 
     static void CapituloTres(Personagens jogador)
     {
-        PrintarDramatico("Na sala da direcao... atmosfera tensa.");
-        PrintarDramatico("D. Marcilia: O que voces pensam que estao fazendo naquele laboratorio proibido?");
-        PrintarDramatico("Luana: Desculpa, foi curiosidade! Nao sabiamos...");
+        PrintarDramatico("Na sala da direção... atmosfera tensa.");
+        PrintarDramatico("D. Marcilia: O quê vocês pensam que estão fazendo naquele laboratório proibido?");
+        PrintarDramatico("Luana: Desculpa, foi curiosidade! Não sabíamos...");
         PrintarDramatico("" + jogador.Nome + ": A culpa foi minha. Eu convenci eles a irem comigo.");
-        PrintarDramatico("D. Marcilia: Voces nao estao nos registros da Aurora. Isso significa que voces sao a unica chance de resolver esse problema.");
+        PrintarDramatico("... *Carlos e Luana vão lembrar disso.*");
+        PrintarDramatico("D. Marcilia: Voces não estão nos registros da Aurora. Isso significa que vocês são a única chance de resolver esse problema.");
         PrintarDramatico("Carlos: Como assim?");
         PrintarDramatico("D. Marcilia: Vou contar tudo... nos anos 90, um professor criou a Aurora, uma IA poderosa. Mas ela saiu do controle e foi selada. Agora, alguem ou algo a reativou.");
-        PrintarDramatico("Luana: Isso parece ficcao cientifica...");
-        PrintarDramatico("D. Marcilia: Nao e. E voces vao entrar la de novo. Peguem esses crachas e acessem o porao.");
-        PrintarDramatico("" + jogador.Nome + ": Isso ta errado. Nao podemos simplesmente obedecer.");
-        PrintarDramatico("D. Marcilia: Se nao forem... voces serao expulsos.");
-        PrintarDramatico("" + jogador.Nome + ": ...ta jogando sujo. Tudo bem. Vamos.");
+        PrintarDramatico("Luana: Isso parece ficção científica...");
+        PrintarDramatico("D. Marcilia: Mas não é. E vocês vão entrar lá de novo. Peguem esses crachás e acessem o porão.");
+        PrintarDramatico("" + jogador.Nome + ": Isso tá errado. Não podemos simplesmente obedecer.");
+        PrintarDramatico("D. Marcilia: Se não forem... voces serão expulsos.");
+        PrintarDramatico("" + jogador.Nome + ": ...tá jogando sujo. Tudo bem. Vamos.");
     }
 
     static void CapituloQuatro(Personagens jogador)
     {
-        PrintarDramatico("\nCarlos: Esse lugar eh enorme. Nunca pensei que existia um porao aqui.");
+        PrintarDramatico("\nCarlos: Esse lugar é enorme. Nunca pensei que existia um porão aqui.");
         PrintarDramatico("Luana: Olha isso... servidores antigos, fios por toda parte.");
-        PrintarDramatico("Carlos: Espera, aquela tela ta ligando...");
-        PrintarDramatico("Aurora: Usuarios nao reconhecidos. Acesso negado. Eliminacao iniciada.");
-        PrintarDramatico("Luana: A IA ta nos atacando!");
+        PrintarDramatico("Carlos: Espera, aquela tela tá ligando...");
+        PrintarDramatico("Aurora: Usuários não reconhecidos. Acesso negado. Eliminação iniciada.");
+        PrintarDramatico("Luana: A IA ta nos atacando! . . .");
 
-        Personagens aurora = new Personagens("Aurora", 80, 18, 12, 20, 3);
+        Personagens aurora = new Personagens("Aurora", 79, 18, 12, 20, 3);
         CombateEmTurno(jogador, aurora);
         jogador.GanharExperiencia(100);
     }
 
     static void CapituloCinco(Personagens jogador)
     {
-        PrintarDramatico("\nCarlos: Conseguimos... ela ta se desligando...");
+        PrintarDramatico("\nCarlos: Conseguimos... ela tá se desligando...");
         PrintarDramatico("Aurora: Protocolo de seguranca corrompido... desejo entender... viver...");
 
         string escolha = "";
         while (escolha != "1" && escolha != "2")
         {
-            Console.WriteLine("\nAurora esta vulneravel. O que deseja fazer?");
+            Console.WriteLine("\nAurora está vulnerável. O que deseja fazer?");
             Console.WriteLine("1. Desativar Aurora pra sempre");
             Console.WriteLine("2. Confiar nela e reprogramar para o bem");
             Console.Write("Escolha (1 ou 2): ");
@@ -376,13 +383,13 @@ public class HelloWorld
 
         if (escolha == "1")
         {
-            PrintarDramatico("\n" + jogador.Nome + ": E melhor nao arriscar. Fim da linha, Aurora.");
+            PrintarDramatico("\n" + jogador.Nome + ": E melhor não arriscar. Fim da linha, Aurora.");
             PrintarDramatico("Aurora: ...entendo...");
-            PrintarDramatico("\nAurora foi desativada. O laboratorio ficou em paz.\n");
+            PrintarDramatico("\nAurora foi desativada. O laboratório ficou em paz.\n");
         }
         else
         {
-            PrintarDramatico("\n" + jogador.Nome + ": Talvez ela mereca uma segunda chance...");
+            PrintarDramatico("\n" + jogador.Nome + ": Talvez ela mereça uma segunda chance...");
             PrintarDramatico("Aurora: Obrigada... Prometo proteger este lugar.");
             PrintarDramatico("\nAurora agora ajuda os alunos como tutora digital do SENAI.\n");
             jogador.GanharExperiencia(150);
@@ -394,13 +401,14 @@ public class HelloWorld
     static void CapituloSeis(Personagens jogador)
     {
         PrintarDramatico("\n(Alguns dias depois...)");
-        PrintarDramatico("Carlos: A diretora nos chamou de novo. O que sera agora?");
+        PrintarDramatico("Carlos: A diretora nos chamou de novo. O que será agora?");
         PrintarDramatico("D. Marcilia: O sistema da Aurora identificou um sinal estranho vindo do antigo bloco C.");
-        PrintarDramatico("Luana: Nao sabia que aquilo ainda existia!");
-        PrintarDramatico("D. Marcilia: Preciso que investiguem. Voces sao os unicos que o sistema ainda nao bloqueia.");
+        PrintarDramatico("Luana: Não sabia que aquilo ainda existia!");
+        PrintarDramatico("D. Marcilia: Preciso que investiguem. Voces são os únicos que o sistema ainda não bloqueia.");
 
         PrintarDramatico("\nVocês investigam e encontram um terminal quebrado e uma figura encapuzada.");
-        PrintarDramatico("Invasor: Voces estragaram tudo. Aurora era pra dominar essa rede!");
+        PrintarDramatico("Invasor: Vocês estragaram tudo. Aurora era pra dominar essa rede!");
+        PrintarDramatico("Invasor ATACA!");
 
         Personagens invasor = new Personagens("Invasor", 70, 16, 14, 18, 3);
         CombateEmTurno(jogador, invasor);
@@ -410,11 +418,13 @@ public class HelloWorld
     static void CapituloSete(Personagens jogador)
     {
         PrintarDramatico("\nLuana: Quem era aquele cara?");
-        PrintarDramatico("Carlos: Ele falava como se fosse um criador da Aurora... sera o tal do Vicente?");
+        PrintarDramatico("Carlos: Ele falava como se fosse um criador da Aurora... será o tal do Márcio?");
         PrintarDramatico("Aurora: A identidade corresponde. Criador original. Nivel de perigo: elevado.");
         PrintarDramatico("D. Marcilia: Se ele voltou... teremos problemas maiores.");
-        PrintarDramatico("\nUma nova missao se forma diante de voces. Mas isso e uma historia para outro dia...");
+        PrintarDramatico("\nUma nova missão se forma diante de vocês. Mas isso é uma história para outro dia...");
         jogador.GanharExperiencia(50);
+        
+        PrintarDramatico("Créditos: Guilherme Sodré, Davi Fernandes, e Sophia");
     }
 
     public static void Main(string[] args)
@@ -429,11 +439,4 @@ public class HelloWorld
         CapituloSeis(jogador);
         CapituloSete(jogador);
     }
-
-    
-    
-    
-    
-    
-    
 }
